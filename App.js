@@ -1,31 +1,18 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import Location from "./screens/Location";
-import { NavigationContainer } from "@react-navigation/native";
-import { locationReducer } from "./store/reducers/location";
-import { BookingStack } from "./navigator/StackNavigators";
-import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
+const express = require("express");
+const globalErrorController = require("./controllers/globalErrorController");
+const AppError = require("./utils/appError");
+const userRouter = require("./routes/userRoutes");
+const bookingRouter = require("./routes/bookingRoutes");
 
-const rootReducer = combineReducers({ location: locationReducer });
+const app = express();
 
-const store = createStore(rootReducer);
-
-export default function App() {
-  return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <BookingStack />
-      </NavigationContainer>
-    </Provider>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+app.use(express.json());
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/booking", bookingRouter);
+app.use("*", (req, res, next) => {
+  next(new AppError(`Cant find ${req.originalUrl}`));
 });
+
+app.use(globalErrorController);
+
+module.exports = app;

@@ -22,7 +22,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "smart-transport"
+    },
+    "android": {
+      "package": "smart-transport"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }

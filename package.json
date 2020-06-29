@@ -1,35 +1,31 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "name": "smarttransport",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deluminators/SmartTransport.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deluminators/SmartTransport/issues"
+  },
+  "homepage": "https://github.com/deluminators/SmartTransport#readme",
   "dependencies": {
-    "@expo/vector-icons": "^10.0.0",
-    "@react-native-community/masked-view": "0.1.6",
-    "@react-navigation/native": "^5.6.0",
-    "@react-navigation/stack": "^5.6.0",
-    "expo": "~37.0.3",
-    "expo-location": "~8.1.0",
-    "expo-permissions": "~8.1.0",
-    "react": "~16.9.0",
-    "react-dom": "~16.9.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
-    "react-native-gesture-handler": "~1.6.0",
-    "react-native-maps": "0.26.1",
-    "react-native-reanimated": "~1.7.0",
-    "react-native-safe-area-context": "0.7.3",
-    "react-native-screens": "~2.2.0",
-    "react-native-web": "~0.11.7",
-    "react-redux": "^7.2.0",
-    "redux": "^4.0.5"
-  },
-  "devDependencies": {
-    "babel-preset-expo": "~8.1.0",
-    "@babel/core": "^7.8.6"
-  },
-  "private": true
+    "axios": "^0.19.2",
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.20",
+    "nodemon": "^2.0.4",
+    "uniqid": "^5.2.0",
+    "validator": "^13.1.1"
+  }
 }
