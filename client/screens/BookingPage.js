@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -9,41 +9,38 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import BookModal from "../Components/BookModal";
+import HeaderButton from "../Components/HeadButton";
 
 const BookingPage = (props) => {
-  const getUrl = async (location, type) => {
-    console.log("hello");
-    const myApiKey = "xKY10BBNp7cUAsRjzs70x205CQUqW0bu";
-    fetch(
-      `https://www.mapquestapi.com/geocoding/v1/reverse?key=${myApiKey}&location=${location.latitude}%2C${location.longitude}&outFormat=json&thumbMaps=true`
-    )
-      .then((response, err) => {
-        if (err) console.log(err);
-        else return response.json();
-      })
-      .then((responseJson) => {
-        // console.log(responseJson.results[0]["locations"][0]);
-        if (type === "pickup")
-          setPickupUrl(responseJson.results[0]["locations"][0]["mapUrl"]);
-        else
-          setDestinationUrl(responseJson.results[0]["locations"][0]["mapUrl"]);
-      });
-  };
-
+  useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerLeft: () => {
+        return (
+          <HeaderButton
+            name="ios-menu"
+            color="white"
+            size={25}
+            onPress={() => {
+              props.navigation.toggleDrawer();
+            }}
+          />
+        );
+      },
+    });
+  });
   const pickup = useSelector((state) => state.location.pickup);
-  console.log(pickup, "pickup");
+
   const destination = useSelector((state) => state.location.destination);
-  console.log(destination, "destination");
+
   const [pickupUrl, setPickupUrl] = useState(null);
   const [destinationUrl, setDestinationUrl] = useState(null);
   const [show, setShow] = useState(false);
   useEffect(() => {
-    if (pickup) {
-      getUrl(pickup, "pickup");
-    }
-    if (destination) {
-      getUrl(destination, "destination");
-    }
+    if (pickup) setPickupUrl(pickup.url);
+    else setPickupUrl(null);
+    if (destination) setDestinationUrl(destination.url);
+    else setDestinationUrl(null);
+    setShow(false);
   }, [pickup, destination]);
 
   return (
@@ -53,7 +50,14 @@ const BookingPage = (props) => {
       }}
     >
       <View style={styles.container}>
-        <Text style={{ fontWeight: "bold", fontSize: 20, paddingVertical: 10 }}>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 20,
+            paddingVertical: 10,
+            color: "black",
+          }}
+        >
           Book Your Transport
         </Text>
         <View style={styles.mapContain}>
@@ -99,8 +103,15 @@ const BookingPage = (props) => {
             justifyContent: "space-around",
           }}
         >
-          <Button title="RIDE NOW" onPress={() => setShow(true)} />
-          <Button title="Rental" onPress={() => setShow(true)} />
+          <Button
+            title="RIDE NOW"
+            onPress={() => setShow(true)}
+            disabled={!pickup && !destination}
+          />
+          <Button
+            title="Rental"
+            onPress={() => props.navigation.navigate("Possible Routes")}
+          />
         </View>
         <BookModal
           navigation={props.navigation}
@@ -118,7 +129,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    zIndex: 1,
   },
   mapContain: {
     width: "80%",

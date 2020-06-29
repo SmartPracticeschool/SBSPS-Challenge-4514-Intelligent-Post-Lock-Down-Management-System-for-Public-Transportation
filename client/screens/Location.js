@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import HeaderButton from "../Components/HeaderButton";
+import axios from "axios";
 import {
   View,
   Text,
@@ -49,10 +50,26 @@ const LocationModal = (props) => {
         return (
           <HeaderButton
             name="Set Location"
-            onPress={() => {
+            onPress={async () => {
+              const myApiKey = "xKY10BBNp7cUAsRjzs70x205CQUqW0bu";
+              const res = await axios.get(
+                `https://www.mapquestapi.com/geocoding/v1/reverse?key=${myApiKey}&location=${location.latitude}%2C${location.longitude}&outFormat=json&thumbMaps=true`
+              );
+              console.log(res.data.results[0]["locations"][0]["mapUrl"]);
               if (props.route.params.text === "pickup")
-                dispatch(addPickupLocation(location));
-              else dispatch(addDestinationLocation(location));
+                dispatch(
+                  addPickupLocation({
+                    ...location,
+                    url: res.data.results[0]["locations"][0]["mapUrl"],
+                  })
+                );
+              else
+                dispatch(
+                  addDestinationLocation({
+                    ...location,
+                    url: res.data.results[0]["locations"][0]["mapUrl"],
+                  })
+                );
               props.navigation.goBack();
             }}
           />

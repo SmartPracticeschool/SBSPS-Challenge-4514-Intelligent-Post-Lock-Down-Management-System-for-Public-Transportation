@@ -8,6 +8,8 @@ import {
   Dimensions,
   Easing,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { setTransportationMode } from "../store/actions/location";
 
 const BookModal = (props) => {
   const height = Dimensions.get("window").height;
@@ -33,9 +35,10 @@ const BookModal = (props) => {
     },
   });
 
+  const dispatch = useDispatch();
+
   const yTranslate = useRef(new Animated.Value(0)).current;
   let negativeHeight = -height + height / 2 + 60;
-  console.log(negativeHeight);
   let modalMoveY = yTranslate.interpolate({
     inputRange: [0, 1],
     outputRange: [0, negativeHeight],
@@ -48,12 +51,14 @@ const BookModal = (props) => {
       Animated.spring(yTranslate, {
         toValue: 1,
         friction: 6,
+        useNativeDriver: true,
       }).start();
     } else {
       Animated.timing(yTranslate, {
         toValue: 0,
         duration: 200,
         easing: Easing.linear,
+        useNativeDriver: true,
       }).start();
     }
   });
@@ -72,56 +77,60 @@ const BookModal = (props) => {
           style={{
             fontSize: 20,
             fontWeight: "bold",
+            color: "black",
           }}
         >
           Available Transports!
         </Text>
         <TouchableNativeFeedback
           onPress={() => {
-            props.navigation.navigate("Booking Success", {
-              locations: props.urls,
-              mode: "Bus",
-            });
+            dispatch(setTransportationMode("Bus"));
+            props.navigation.navigate("Possible Routes");
           }}
         >
           <View style={styles.transport}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>Bus</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18, color: "black" }}>
+              Bus
+            </Text>
           </View>
         </TouchableNativeFeedback>
         <TouchableNativeFeedback
           onPress={() => {
-            props.navigation.navigate("Booking Success", {
-              locations: props.urls,
-              mode: "Auto",
-            });
+            dispatch(setTransportationMode("Auto"));
+            props.navigation.navigate("Possible Routes");
           }}
         >
           <View style={styles.transport}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>Auto</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18, color: "black" }}>
+              Auto
+            </Text>
           </View>
         </TouchableNativeFeedback>
         <TouchableNativeFeedback
           onPress={() => {
-            props.navigation.navigate("Booking Success", {
-              locations: props.urls,
-              mode: "Taxi",
-            });
+            dispatch(setTransportationMode("Taxi"));
+            props.navigation.navigate("Possible Routes");
           }}
         >
           <View style={styles.transport}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>Taxi</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18, color: "black" }}>
+              Taxi
+            </Text>
           </View>
         </TouchableNativeFeedback>
         <TouchableNativeFeedback
           onPress={() => {
-            props.navigation.navigate("Booking Success", {
-              locations: props.urls,
-              mode: "Bike",
+            dispatch(setTransportationMode("Bike"));
+            props.navigation.navigate("Book Here", {
+              screen: "Possible Routes",
+              inital: false,
             });
           }}
         >
           <View style={styles.transport}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>Bike</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18, color: "black" }}>
+              Bike
+            </Text>
           </View>
         </TouchableNativeFeedback>
       </View>
