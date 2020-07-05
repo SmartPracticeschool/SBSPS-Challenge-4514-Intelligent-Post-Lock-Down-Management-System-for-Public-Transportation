@@ -6,10 +6,11 @@ import json
 import ast
  
 twitter_credentials = {
-        'consumer_key':        'NPOZDKAbob1tBMsDUFQ07gRAr',
-        'consumer_secret':     'p0sztMBbhjzUS9ygnZk9ij5yT0lIFeOyxYZKoMBTDhL2M6Vpmy',
-        'access_token_key':    '1328561335-ACXCyUvKLz8xKhvBZVy6iyy5H2OS7zjkM2Vtciz',
-        'access_token_secret': '2O7CvtFKit2LFrb4h0NhqBf0YKppuWyWmDCukl1yxlDIo'
+        #refer to github.com/kahanikaar/api-sensitive
+        'consumer_key':       
+        'consumer_secret':     
+        'access_token_key':    
+        'access_token_secret': 
     }
  
 consumer_key='NPOZDKAbob1tBMsDUFQ07gRAr'
