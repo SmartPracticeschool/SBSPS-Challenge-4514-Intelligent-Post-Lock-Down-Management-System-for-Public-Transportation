@@ -1,7 +1,7 @@
-import { AsyncStorage, TextPropTypes } from "react-native";
-import axios from "axios";
-export const AUTHENTICATE = "AUTHENTICATE";
-export const LOGOUT = "LOGOUT";
+import { AsyncStorage, TextPropTypes } from 'react-native';
+import axios from 'axios';
+export const AUTHENTICATE = 'AUTHENTICATE';
+export const LOGOUT = 'LOGOUT';
 
 let timer;
 
@@ -9,7 +9,7 @@ export const signup = (email, password, passwordConfirm, name, mobile) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://192.168.43.206:3000/api/v1/users/signup",
+        'http://192.168.43.206:3000/api/v1/users/signup',
 
         {
           email: email,
@@ -31,33 +31,53 @@ export const signup = (email, password, passwordConfirm, name, mobile) => {
   };
 };
 
-export const login = (email, password) => {
-  //   console.log(email, "email");
+export const googleLogin = (idToken) => {
   return async (dispatch) => {
-    try {
-      console.log(email, "email");
-      const response = await axios.post(
-        "http://192.168.43.206:3000/api/v1/users/login",
-        {
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+    const response = await axios.post(
+      'http://192.168.43.206:3000/api/v1/users/login',
+      { method: 'google', idToken }
+    );
+    const resData = response.data;
+    dispatch(authenticate(resData.user, resData.token, resData.expiresIn));
+    const expirationDate = new Date(new Date().getTime() + resData.expiresIn);
+    saveDataToStorage(resData.token, resData.user, expirationDate);
+  };
+};
 
-      const resData = response.data;
-      console.log(resData);
-      dispatch(authenticate(resData.user, resData.token, resData.expiresIn));
-      const expirationDate = new Date(new Date().getTime() + resData.expiresIn);
-      saveDataToStorage(resData.token, resData.user, expirationDate);
-    } catch (er) {
-      console.log(er);
-      throw new Error(er.response.data.message);
-    }
+export const facebookLogin = (accessToken) => {
+  console.log('hh');
+  return async (dispatch) => {
+    const response = await axios.post(
+      'http://192.168.43.206:3000/api/v1/users/login',
+      { method: 'facebook', accessToken }
+    );
+    const resData = response.data;
+    dispatch(authenticate(resData.user, resData.token, resData.expiresIn));
+    const expirationDate = new Date(new Date().getTime() + resData.expiresIn);
+    saveDataToStorage(resData.token, resData.user, expirationDate);
+  };
+};
+
+export const login = (email, password) => {
+  return async (dispatch) => {
+    const response = await axios.post(
+      'http://192.168.43.206:3000/api/v1/users/login',
+      {
+        email: email,
+        password: password,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const resData = response.data;
+    console.log(resData);
+    dispatch(authenticate(resData.user, resData.token, resData.expiresIn));
+    const expirationDate = new Date(new Date().getTime() + resData.expiresIn);
+    saveDataToStorage(resData.token, resData.user, expirationDate);
   };
 };
 
@@ -70,7 +90,7 @@ export const authenticate = (user, token, expiryTime) => {
 
 const saveDataToStorage = (token, user, expirationDate) => {
   AsyncStorage.setItem(
-    "userData",
+    'userData',
     JSON.stringify({
       token: token,
       user: user,
@@ -81,9 +101,9 @@ const saveDataToStorage = (token, user, expirationDate) => {
 
 export const logout = () => {
   // clearLogoutTimer();
-  console.log("logging out");
-  AsyncStorage.removeItem("userData");
-  console.log("removed");
+  console.log('logging out');
+  AsyncStorage.removeItem('userData');
+  console.log('removed');
   return { type: LOGOUT };
 };
 

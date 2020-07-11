@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,10 +6,10 @@ import {
   Button,
   Image,
   TouchableWithoutFeedback,
-} from "react-native";
-import { useSelector } from "react-redux";
-import BookModal from "../Components/BookModal";
-import HeaderButton from "../Components/HeadButton";
+} from 'react-native';
+import { useSelector } from 'react-redux';
+import BookModal from '../Components/BookModal';
+import HeaderButton from '../Components/HeadButton';
 
 const BookingPage = (props) => {
   useLayoutEffect(() => {
@@ -52,10 +52,10 @@ const BookingPage = (props) => {
       <View style={styles.container}>
         <Text
           style={{
-            fontWeight: "bold",
+            fontWeight: 'bold',
             fontSize: 20,
             paddingVertical: 10,
-            color: "black",
+            color: 'black',
           }}
         >
           Book Your Transport
@@ -64,23 +64,24 @@ const BookingPage = (props) => {
           {pickupUrl ? (
             <Image
               source={{ uri: pickupUrl }}
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: '100%', height: '100%' }}
             />
           ) : (
             <Text>Not selected yet</Text>
           )}
         </View>
         <Button
+          color="#80b918"
           title="Set Pickup point"
           onPress={() => {
-            props.navigation.navigate("Maps", { text: "pickup" });
+            props.navigation.navigate('Maps', { text: 'pickup' });
           }}
         />
         <View style={styles.mapContain}>
           {destinationUrl ? (
             <Image
               source={{ uri: destinationUrl }}
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: '100%', height: '100%' }}
             />
           ) : (
             <Text>Not selected yet</Text>
@@ -88,9 +89,10 @@ const BookingPage = (props) => {
         </View>
         <View style={{ zIndex: 1 }}>
           <Button
+            color="#80b918"
             title="Set Destination"
             onPress={() => {
-              props.navigation.navigate("Maps", { text: "destination" });
+              props.navigation.navigate('Maps', { text: 'destination' });
             }}
           />
         </View>
@@ -98,19 +100,21 @@ const BookingPage = (props) => {
           style={{
             marginVertical: 20,
             zIndex: 1,
-            flexDirection: "row",
-            width: "80%",
-            justifyContent: "space-around",
+            flexDirection: 'row',
+            width: '80%',
+            justifyContent: 'space-around',
           }}
         >
           <Button
+            color="#007f5f"
             title="RIDE NOW"
             onPress={() => setShow(true)}
             disabled={!pickup && !destination}
           />
           <Button
+            color="#007f5f"
             title="Rental"
-            onPress={() => props.navigation.navigate("Possible Routes")}
+            onPress={() => props.navigation.navigate('Possible Routes')}
           />
         </View>
         <BookModal
@@ -128,16 +132,16 @@ export default BookingPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   mapContain: {
-    width: "80%",
-    borderColor: "grey",
-    borderStyle: "solid",
+    width: '80%',
+    borderColor: 'grey',
+    borderStyle: 'solid',
     borderWidth: 1,
-    height: "30%",
+    height: '30%',
     marginVertical: 20,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
