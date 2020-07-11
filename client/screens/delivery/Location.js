@@ -1,15 +1,11 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
-import HeaderButton from '../Components/HeaderButton';
+import HeaderButton from '../../Components/HeaderButton';
 import axios from 'axios';
 import {
   View,
-  Text,
   Alert,
-  Dimensions,
   ActivityIndicator,
-  Image,
   TextInput,
-  SafeAreaView,
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -19,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import {
   addPickupLocation,
   addDestinationLocation,
-} from '../store/actions/location';
+} from '../../store/actions/deliveryLocation';
 
 const LocationModal = (props) => {
   const [location, setLocation] = useState(null);
@@ -50,7 +46,7 @@ const LocationModal = (props) => {
         return (
           <HeaderButton
             name="Set Location"
-            color="#007f5f"
+            color="#be95c4"
             onPress={async () => {
               const myApiKey = 'xKY10BBNp7cUAsRjzs70x205CQUqW0bu';
               const res = await axios.get(

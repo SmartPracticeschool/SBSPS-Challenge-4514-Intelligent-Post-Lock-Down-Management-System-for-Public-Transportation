@@ -1,15 +1,17 @@
-import React from "react";
-import { registerRootComponent } from "expo";
-import authReducer from "./store/reducers/auth";
-import { Provider } from "react-redux";
-import { combineReducers, createStore, applyMiddleware } from "redux";
-import { locationReducer } from "./store/reducers/location";
-import ReduxThunk from "redux-thunk";
-import App from "./App";
+import React from 'react';
+import { registerRootComponent } from 'expo';
+import authReducer from './store/reducers/auth';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { locationReducer } from './store/reducers/location';
+import { deliveryLocationReducers } from './store/reducers/deliveryLocation';
+import ReduxThunk from 'redux-thunk';
+import App from './App';
 
 const rootReducer = combineReducers({
   location: locationReducer,
   auth: authReducer,
+  deliveryLocation: deliveryLocationReducers,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

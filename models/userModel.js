@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcrypt");
-const crypto = require("crypto");
-const asyncCatch = require("../utils/catchAsync");
+const mongoose = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const asyncCatch = require('../utils/catchAsync');
 
 const Schema = mongoose.Schema;
 
@@ -15,8 +15,8 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    required: [true, "Please Enter your name"],
-    unique: [true, "The email exists"],
+    required: [true, 'Please Enter your name'],
+    unique: [true, 'The email exists'],
     lowercase: true,
     validate: {
       validator: function (email) {
@@ -24,25 +24,30 @@ const userSchema = new Schema({
         console.log(validator.isEmail(email));
         return validator.isEmail(email);
       },
-      message: "Please provide a valid email id",
+      message: 'Please provide a valid email id',
     },
   },
   mobile: {
     type: Number,
-    required: [true, "Please enter your mobile"],
+  },
+  googleId: {
+    type: String,
+  },
+  facebookId: {
+    type: String,
   },
   photo: {
     type: String,
   },
   password: {
     type: String,
-    required: [true, "Please set a password"],
+    required: [true, 'Please set a password'],
     minlength: 8,
     select: false,
   },
   passwordConfirmation: {
     type: String,
-    required: [true, "Please confirm your password"],
+    required: [true, 'Please confirm your password'],
     select: false,
     validate: {
       validator: function () {
@@ -59,21 +64,21 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirmation = undefined;
   next();
 });
 
-userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
   if (!this.isNew) return next();
   this.passwordCreatedAt = new Date().getTime();
   next();
 });
 
-userSchema.pre("save", function (next) {
-  if (!this.isModified("password") && this.isNew) return next();
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') && this.isNew) return next();
   this.passwordCreatedAt = new Date().getTime() - 1000;
   next();
 });
@@ -95,13 +100,13 @@ userSchema.methods.isPasswordChanged = (passwordTime, timestamp) => {
 };
 
 userSchema.methods.generateForgotPasswordToken = function () {
-  const resetToken = crypto.randomBytes(32).toString("hex");
+  const resetToken = crypto.randomBytes(32).toString('hex');
   console.log(resetToken);
 
   this.passwordResetToken = crypto
-    .createHash("sha256")
+    .createHash('sha256')
     .update(resetToken)
-    .digest("hex");
+    .digest('hex');
 
   this.passwordResetExpiresIn = new Date().getTime() + 10 * 60 * 1000;
 
@@ -113,5 +118,5 @@ userSchema.methods.generateForgotPasswordToken = function () {
   return resetToken;
 };
 
-const userModel = mongoose.model("User", userSchema);
+const userModel = mongoose.model('User', userSchema);
 module.exports = userModel;
