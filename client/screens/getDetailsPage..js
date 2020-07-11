@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   View,
   Text,
@@ -8,17 +8,17 @@ import {
   Picker,
   Alert,
   ActivityIndicator,
-} from "react-native";
-import RazorpayCheckout from "react-native-razorpay";
-import { clearLocation } from "../store/actions/location";
+} from 'react-native';
+import RazorpayCheckout from 'react-native-razorpay';
+import { clearLocation } from '../store/actions/location';
 
-import axios from "axios";
+import axios from 'axios';
 
 const GetDetailsPage = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const [selectedValue, setSelectedValue] = useState("online");
+  const [selectedValue, setSelectedValue] = useState('online');
   const user = useSelector((state) => state.auth.user);
   const location = useSelector((state) => state.location);
   const token = useSelector((state) => state.auth.token);
@@ -38,7 +38,7 @@ const GetDetailsPage = (props) => {
     setIsLoading(true);
 
     const res = await axios.post(
-      "http://192.168.43.206:3000/api/v1/booking/createorder",
+      'http://192.168.43.206:3000/api/v1/booking/createorder',
       { amount }
     );
     return res.data.data.id;
@@ -47,7 +47,7 @@ const GetDetailsPage = (props) => {
   const book = useCallback(async (pickup, destination, transportationMode) => {
     console.log(pickup, destination, transportationMode);
     const res = await axios.post(
-      "http://192.168.43.206:3000/api/v1/booking/createBooking",
+      'http://192.168.43.206:3000/api/v1/booking/createBooking',
       {
         pickup: JSON.stringify(pickup),
         destination: JSON.stringify(destination),
@@ -64,31 +64,32 @@ const GetDetailsPage = (props) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
+      Alert.alert('An Error Occurred!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
   const comp =
-    selectedValue === "online" ? (
+    selectedValue === 'online' ? (
       <Button
         title="Pay Now"
+        color="#007f5f"
         onPress={async () => {
           try {
             setError(null);
             const orderId = await getOrderId(2000);
             var options = {
-              description: "Book your transport",
-              image: "https://i.imgur.com/3g7nmJC.png",
-              currency: "INR",
-              key: "rzp_test_2EpN77dvZEjRup",
-              amount: "2000",
-              name: "Smart Transport",
+              description: 'Book your transport',
+              image: 'https://i.imgur.com/3g7nmJC.png',
+              currency: 'INR',
+              key: 'rzp_test_2EpN77dvZEjRup',
+              amount: '2000',
+              name: 'Smart Transport',
               order_id: orderId, //Replace this with an order_id created using Orders API. Learn more at https://razorpay.com/docs/api/orders.
               prefill: {
                 email: email,
-                contact: "+91" + mobile,
+                contact: '+91' + mobile,
                 name: name,
               },
-              theme: { color: "green" },
+              theme: { color: '#2b9348' },
             };
 
             RazorpayCheckout.open(options)
@@ -111,17 +112,21 @@ const GetDetailsPage = (props) => {
     ) : (
       <Button
         title="Proceed"
+        color="#007f5f"
         onPress={async (e) => {
           setError(null);
           try {
             setIsLoading(true);
             const bookingDetails = await book(pickup, destination, mode);
             setIsLoading(false);
-            props.navigation.replace("Booking Success", { bookingDetails });
+            props.navigation.replace('Booking Success', { bookingDetails });
             dispatch(clearLocation());
           } catch (er) {
-            setError(er.response.data.message);
             setIsLoading(false);
+            console.log(er);
+            if (er.response) {
+              setError(er.response.data.message);
+            } else setError('Network Error!');
           }
         }}
       />
@@ -131,9 +136,9 @@ const GetDetailsPage = (props) => {
       <Text
         style={{
           fontSize: 20,
-          fontWeight: "bold",
+          fontWeight: 'bold',
           marginVertical: 10,
-          color: "black",
+          color: 'black',
         }}
       >
         Select Payment Method
@@ -145,9 +150,9 @@ const GetDetailsPage = (props) => {
             height: 50,
             width: 150,
             fontSize: 15,
-            borderColor: "grey",
+            borderColor: 'grey',
             borderWidth: 1,
-            color: "black",
+            color: 'black',
           }}
           onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
         >
@@ -155,8 +160,8 @@ const GetDetailsPage = (props) => {
           <Picker.Item label="Pay Online" value="online" />
         </Picker>
       </View>
-      <View style={{ width: "50%" }}>
-        {isLoading ? <ActivityIndicator color="black" /> : comp}
+      <View style={{ width: '50%' }}>
+        {isLoading ? <ActivityIndicator color="#007f5f" /> : comp}
       </View>
     </View>
   );
@@ -167,7 +172,7 @@ export default GetDetailsPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
