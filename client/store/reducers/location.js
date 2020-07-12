@@ -3,12 +3,15 @@ import {
   SET_PICKUP_LOCATION,
   SET_TRANSPORTATION_MODE,
   CLEAR_LOCATION,
-} from "../actions/location";
+  SET_GROUP,
+  RESET_GROUP,
+} from '../actions/location';
 
 const initialState = {
   pickup: null,
   destination: null,
   mode: null,
+  groupId: null,
 };
 
 export const locationReducer = (state = initialState, action) => {
@@ -21,6 +24,10 @@ export const locationReducer = (state = initialState, action) => {
       return Object.assign({}, state, { mode: action.mode });
     case CLEAR_LOCATION:
       return initialState;
+    case SET_GROUP:
+      return Object.assign({}, state, { groupId: action.id });
+    case RESET_GROUP:
+      return Object.assign({}, state, { groupId: null });
     default:
       return state;
   }
