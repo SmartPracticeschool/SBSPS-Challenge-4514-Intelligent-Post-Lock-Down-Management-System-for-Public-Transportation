@@ -70,10 +70,8 @@ const AuthScreen = (props) => {
     if (!user) {
       console.log('running..');
       GoogleSignin.configure({
-        webClientId:
-          '783346339308-k3daq805ntuqlav62d9avv90os6md0nb.apps.googleusercontent.com', // client ID of type WEB for your server(needed to verify user ID and offline access)
-        androidClientId:
-          '783346339308-85sonk0u6fvichboudktdedebfi84eot.apps.googleusercontent.com',
+        webClientId: 'webclientid', // client ID of type WEB for your server(needed to verify user ID and offline access)
+        androidClientId: 'androidclientid',
         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
         forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
         accountName: '', // [Android] specifies an account name on the device that should be used

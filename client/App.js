@@ -21,6 +21,11 @@ import DeliveryHomeScreen from './screens/delivery/deliveryHomeScreen';
 import MapDelivery from './screens/delivery/Location';
 import SuccessDelivery from './screens/delivery/successDelivery';
 import Scanner from './screens/QRcode/scanner';
+import DonationScreen from './screens/donations/DonationScreen';
+import DonatedItemDetailsScreen from './screens/donations/donatedItemDetails';
+import GroupScreen from './screens/grpTravel/booling';
+import FindScreen from './screens/grpTravel/findScreen';
+import CreateGrpScreen from './screens/grpTravel/createGrpScreen';
 
 import { useSelector } from 'react-redux';
 
@@ -127,7 +132,36 @@ const QRcodeStack = () => {
         headerStyle: { backgroundColor: '#7b5a44' },
       }}
     >
-      <Stack.Screen name="QRcode" component={Scanner} />
+      <Stack.Screen name="Scan the code" component={Scanner} />
+    </Stack.Navigator>
+  );
+};
+
+const DonateStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: { backgroundColor: '#7b5a44' },
+      }}
+    >
+      <Stack.Screen name="Donations" component={DonationScreen} />
+      <Stack.Screen name="Details" component={DonatedItemDetailsScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const GroupStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTintColor: 'white',
+        headerStyle: { backgroundColor: '#324376' },
+      }}
+    >
+      <Stack.Screen name="Group Booking" component={GroupScreen} />
+      <Stack.Screen name="Find Group" component={FindScreen} />
+      <Stack.Screen name="Create Group" component={CreateGrpScreen} />
     </Stack.Navigator>
   );
 };
@@ -147,6 +181,8 @@ const DrawerNavigator = () => (
     <Drawer.Screen name="Home" component={TabNavigator} />
     <Drawer.Screen name="Chat with us" component={ChatStack} />
     <Drawer.Screen name="Scan QRcode" component={QRcodeStack} />
+    <Drawer.Screen name="Donate" component={DonateStack} />
+    <Drawer.Screen name="Book in group" component={GroupStack} />
   </Drawer.Navigator>
 );
 
