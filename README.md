@@ -70,6 +70,9 @@ A pre-kept number of seats for emergency travelers would make sure people do not
 Capturing location data from travelers and analyzing them to find out the best possible route and mode of transport together with the real-time data would make sure, the system is efficient and proven.
 Sound-based navigation would help two-wheelers stay protected by showing them the best route to their destination.
 A system for reporting COVID suspected people would help in the betterment of them as well as the general public.
+A perimeter alarm system would see that no two people come so close that the chances of the virus getting spread from the infected to the fit person get high.
+Limiting the number of interactions would make sure everything remains under control.
+Free-lanced system for goods delivery would help both the parties.
 
 ## Business/ Social Impact-
 While developing any application, it is important to make sure that it has a social as well as a business impact. Our solution too is aspired to have command in these two fronts, in the below mentioned following ways-
