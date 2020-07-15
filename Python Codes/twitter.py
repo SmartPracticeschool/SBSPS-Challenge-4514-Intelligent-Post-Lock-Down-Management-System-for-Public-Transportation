@@ -62,5 +62,11 @@ def get_tweets(username):
   
 def twitter(user) :
     get_tweets(user)
+    hash_tag_list = ["covid,covid19,corona,vaccination,medicine"]
+    fetched_tweets_filename = "tweets.txt"
+
+    twitter_streamer = TwitterStreamer()
+    twitter_streamer.stream_tweets(fetched_tweets_filename, hash_tag_list)
+
 
      
