@@ -90,3 +90,40 @@ Currently, we have planned to build a mobile as well as a web application for wh
 ## Scope of Work-
 Later we aim to add an extended feature for the application users’ to record from their responses the worst-hit businesses to draw out a common conclusion depicting the severity of the impact the virus had on different professions.
 
+
+### Prerequisites
+
+As long as you have a pc, with an emulator installed to it, with node, npm and react-native cli installed, you are good to go!
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running
+
+Connect your android device for usb debugging or set up an emulator.
+
+Go to root of the project. Run
+
+```
+npm install
+```
+
+```
+npm run dev
+```
+It will start node server.
+
+Then change directory to client.
+
+```
+cd client 
+```
+
+```
+npm install
+```
+
+```
+npm run android
+```
+
+A metro server will start in terminal and application will be installed in your android device.
