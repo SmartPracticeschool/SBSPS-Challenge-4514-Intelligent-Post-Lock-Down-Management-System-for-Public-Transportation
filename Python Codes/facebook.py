@@ -114,4 +114,3 @@ def facebook(user):
     print(items.text) 
 
 facebook(user)
-
