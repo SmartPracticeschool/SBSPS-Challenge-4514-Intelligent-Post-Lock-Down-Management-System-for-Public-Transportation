@@ -4,6 +4,10 @@
 ### Bravel 
 A smart web and mobile-based application countering the intractable problems of transportation, traffic-management and related problems arising post lock down raising.
 
+### Find the apk to install the mobile application 
+https://drive.google.com/drive/folders/1_4DOj8E1cfSLokEqYo2WcsA6ry7ZlKsX?usp=sharing
+
+
 ## General Description-
 We present an application which addresses some of the major problems on and off the problem statement, for smart traffic management and easy inter-territory transportation. Below are some basic points portraying the features the application would consist of-
 Making known to travelers the various COVID’19 hit places en route their destination via Maps or other similar technologies.
